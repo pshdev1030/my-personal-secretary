@@ -1,0 +1,5 @@
+{
+  "watch": ["app.js", "models", "router", "nodemon.json", "mongo.js"],
+  "exec": "node app.js",
+  "ext": "js json"
+}
