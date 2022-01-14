@@ -15,9 +15,6 @@ app.use(bodyParser.json());
 
 dbConnect();
 
-const index = require("./router/index");
-app.use("/", index);
-
 const user = require("./router/user");
 app.use("/user", user);
 
