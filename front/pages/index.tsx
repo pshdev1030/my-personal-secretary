@@ -1,27 +1,19 @@
-import Calander from 'components/Calender';
-import React, { ReactElement } from 'react';
-import { ToastContainer } from 'react-toastify';
-import AppLayout from '../components/AppLayout';
+import AppLayout from "@components/AppLayout";
+import Calendar from "@components/Calendar";
+import type { NextPage } from "next";
+import { useState } from "react";
+import { Modal } from "antd";
 
-const Example = (): ReactElement => {
+const Home: NextPage = () => {
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   return (
     <>
       <AppLayout>
-        <Calander />
+        <Calendar />
       </AppLayout>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      {isModalOpened && <Modal />}
     </>
   );
 };
 
-export default Example;
+export default Home;

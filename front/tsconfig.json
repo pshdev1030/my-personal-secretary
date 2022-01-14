@@ -19,7 +19,8 @@
       "@types/*": ["@types/*"],
       "@interfaces/*": ["@interfaces/*"],
       "@pages/*": ["@pages/*"]
-    }
+    },
+    "incremental": true
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]

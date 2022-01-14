@@ -1,14 +1,19 @@
-import { AppProps } from 'next/app';
-import { NextPage } from 'next';
-import axios from 'axios';
-import { wrapper } from '../store';
-import 'antd/dist/antd.css';
-import 'react-toastify/dist/ReactToastify.css';
-import '../components/style.scss';
-axios.defaults.baseURL = 'http://localhost:6000';
+import type { AppProps } from "next/app";
+import "antd/dist/antd.css";
+import "react-toastify/dist/ReactToastify.css";
+import "@fullcalendar/common/main.css";
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
+import Head from "next/head";
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <Head>
+        <title>My Personal Secretary</title>
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
+}
 
-const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
-};
-
-export default wrapper.withRedux(MyApp);
+export default MyApp;

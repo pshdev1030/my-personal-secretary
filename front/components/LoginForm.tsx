@@ -1,35 +1,29 @@
-import { Form, Input, Button } from 'antd';
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-
-interface loginInfo {
-  email: string;
-  password: string;
-}
+import React, { ReactElement, useCallback } from "react";
+import { Input, Form, Button } from "antd";
+import Link from "next/link";
+import { toast } from "react-toastify";
+import useInput from "hooks/useInput";
 
 const LoginForm = (): ReactElement => {
-  const onSubmit = async (userData: loginInfo) => {
-    try {
-      const { email, password } = userData;
-      if (email.trim().length === 0 || password.trim().length === 0)
-        toast('모든 항목을 입력해주세요');
-      const data = await axios.post('/user/login', { email, password, username: 'asdf' });
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
+  const [email, onChangeEmail] = useInput("");
+  const [password, onChangePassword] = useInput("");
+  const onSubmit = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (email.trim().length === 0 || password.trim().length === 0) {
+        toast.error("모든 값을 입력해주세요");
+      }
+      console.log(email, password);
+    },
+    [email, password]
+  );
 
-    return;
-  };
   return (
-    <Form layout="horizontal" onFinish={onSubmit}>
-      <Form.Item name="email" label="email" required>
-        <Input type="email" />
+    <Form onFinish={onSubmit}>
+      <Form.Item label="email" name="loginEmail">
+        <Input type="email" value={email} onChange={onChangeEmail} />
       </Form.Item>
-      <Form.Item name="password" label="password" required>
-        <Input type="password" />
+      <Form.Item label="passowrd" name="loginPassword">
+        <Input type="password" value={password} onChange={onChangePassword} />
       </Form.Item>
       <Button type="primary" htmlType="submit">
         로그인
@@ -42,5 +36,5 @@ const LoginForm = (): ReactElement => {
     </Form>
   );
 };
-
+// 길이 제한 두기
 export default LoginForm;
