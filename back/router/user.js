@@ -41,13 +41,6 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne().where("email").equals(email);
-    if (!user) {
-      return res
-        .status(500)
-        .json({ error: "This user is not exist", success: false });
-    }
-    const isPasswordCorrect = await argon2.verify(user.password, password);
     const isEmailExist = await User.existEmailValidator(email);
 
     if (!isEmailExist) {
@@ -55,6 +48,9 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ error: "This email is not exist", success: false });
     }
+
+    const user = await User.findOne().where("email").equals(email);
+    const isPasswordCorrect = await argon2.verify(user.password, password);
 
     if (!isPasswordCorrect) {
       return res
