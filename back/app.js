@@ -21,6 +21,10 @@ const port = process.env.PORT || 7000;
 
 dbConnect();
 
+app.get("/", (req, res) => {
+  res.status(200).json({ id: "hi", username: "hi" });
+});
+
 const user = require("./router/user");
 app.use("/user", user);
 
