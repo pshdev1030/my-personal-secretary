@@ -38,7 +38,6 @@ const Calendar = (): ReactElement => {
         ]}
         height="auto"
         editable
-        dateClick={(date) => (date.dayEl.style.background = "black")}
         selectable
       />
     </div>

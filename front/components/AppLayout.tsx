@@ -31,8 +31,8 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {/* <LoginForm /> */}
-          <UserInfo />
+          <LoginForm />
+          {/* <UserInfo /> */}
         </Col>
         <Col xs={24} md={18}>
           {children}

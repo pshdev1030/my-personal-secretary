@@ -1,4 +1,5 @@
-FE: nextjs+ts+redux+reduxsaga
-BE: express+mongoose
+My Personal Secretery
 
-Have a good day!
+back:javascript(will be typing) + express + mongoose
+
+front:typescript nextjs + antd + swr(or react-query)?

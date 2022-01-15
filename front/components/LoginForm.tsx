@@ -3,16 +3,24 @@ import { Input, Form, Button } from "antd";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import useInput from "hooks/useInput";
+import axios from "axios";
 
 const LoginForm = (): ReactElement => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const onSubmit = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       if (email.trim().length === 0 || password.trim().length === 0) {
         toast.error("모든 값을 입력해주세요");
       }
-      console.log(email, password);
+      try {
+        const result = await axios.post("http://localhost:8000/user/login", {
+          email,
+          password,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
     [email, password]
   );
