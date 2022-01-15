@@ -6,12 +6,18 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({ origin: "*", credentials: true }));
-const port = process.env.PORT || 7000;
-
+app.use(cors());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+const corsOpt = function (req, callbank) {
+  callbank(null, { origin: true });
+};
+
+app.options("*", cors(corsOpt));
+
+const port = process.env.PORT || 7000;
 
 dbConnect();
 
