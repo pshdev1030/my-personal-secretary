@@ -23,8 +23,15 @@ const LoginForm = (): ReactElement => {
         setEmail("");
         setPassword("");
         mutate("http://localhost:8000/user/login", result.data);
-      } catch (err) {
-        console.log(err);
+      } catch (err: any) {
+        console.log(err.response);
+        if (err.response.data.message) {
+          toast.error(err.response.data.message);
+          setEmail("");
+          setPassword("");
+          return;
+        }
+        toast.error("에러가 발생하였습니다.");
       }
     },
     [email, password]
