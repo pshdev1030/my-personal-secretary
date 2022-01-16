@@ -16,6 +16,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
     "http://localhost:8000/user/login",
     loginFetcher
   );
+
   return (
     <>
       <Menu mode="horizontal">

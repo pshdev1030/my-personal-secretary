@@ -1,7 +1,12 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import { Avatar, Card, Button } from "antd";
 import gravatar from "gravatar";
+import { mutate } from "swr";
 const UserInfo = (): ReactElement => {
+  const onLogOut = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    mutate("http://localhost:8000/user/login", null);
+  }, []);
+
   return (
     <Card actions={[]}>
       <Card.Meta
@@ -16,7 +21,7 @@ const UserInfo = (): ReactElement => {
           />
         }
       />
-      <Button>로그아웃</Button>
+      <Button onClick={onLogOut}>로그아웃</Button>
     </Card>
   );
 };

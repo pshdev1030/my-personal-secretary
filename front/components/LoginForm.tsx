@@ -20,9 +20,9 @@ const LoginForm = (): ReactElement => {
           email,
           password,
         });
-        mutate("http://localhost:8000/user/login", result.data);
         setEmail("");
         setPassword("");
+        mutate("http://localhost:8000/user/login", result.data);
       } catch (err) {
         console.log(err);
       }
