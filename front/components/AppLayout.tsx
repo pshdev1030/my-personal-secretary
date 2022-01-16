@@ -4,12 +4,18 @@ import { ReactElement, ReactNode } from "react";
 import LoginForm from "./LoginForm";
 import { ToastContainer } from "react-toastify";
 import UserInfo from "./UserInfo";
+import useSWR from "swr";
+import { loginFetcher } from "fetcher/user";
 
 interface AppLayoutPropsType {
   children: ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
+  const { data: user } = useSWR(
+    "http://localhost:8000/user/login",
+    loginFetcher
+  );
   return (
     <>
       <Menu mode="horizontal">
@@ -31,8 +37,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          <LoginForm />
-          {/* <UserInfo /> */}
+          {user ? <UserInfo /> : <LoginForm />}
         </Col>
         <Col xs={24} md={18}>
           {children}

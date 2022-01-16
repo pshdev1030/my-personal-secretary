@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import useInput from "hooks/useInput";
 import axios from "axios";
 const SignUpForm = (): ReactElement => {
-  const [email, onChangeEmail] = useInput("");
-  const [password, onChangePassword] = useInput("");
-  const [username, onChangeUserame] = useInput("");
+  const [email, onChangeEmail, setEmail] = useInput("");
+  const [password, onChangePassword, setPassword] = useInput("");
+  const [username, onChangeUserame, setUsername] = useInput("");
 
   const onSubmit = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +23,9 @@ const SignUpForm = (): ReactElement => {
           username: username,
           password,
         });
+        setEmail("");
+        setUsername("");
+        setPassword("");
       } catch (err) {
         console.log(err);
       }

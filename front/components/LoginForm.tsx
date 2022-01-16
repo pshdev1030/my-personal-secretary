@@ -4,10 +4,12 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import useInput from "hooks/useInput";
 import axios from "axios";
+import { useSWRConfig } from "swr";
 
 const LoginForm = (): ReactElement => {
-  const [email, onChangeEmail] = useInput("");
-  const [password, onChangePassword] = useInput("");
+  const { mutate } = useSWRConfig();
+  const [email, onChangeEmail, setEmail] = useInput("");
+  const [password, onChangePassword, setPassword] = useInput("");
   const onSubmit = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       if (email.trim().length === 0 || password.trim().length === 0) {
@@ -18,6 +20,9 @@ const LoginForm = (): ReactElement => {
           email,
           password,
         });
+        mutate("http://localhost:8000/user/login", result.data);
+        setEmail("");
+        setPassword("");
       } catch (err) {
         console.log(err);
       }
