@@ -24,11 +24,13 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
             <a>홈</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="Signup">
-          <Link href="/signup" passHref>
-            <a>회원가입</a>
-          </Link>
-        </Menu.Item>
+        {!user && (
+          <Menu.Item key="Signup">
+            <Link href="/signup" passHref>
+              <a>회원가입</a>
+            </Link>
+          </Menu.Item>
+        )}
         <Menu.Item key="Secretary">
           <Link href="/secretary" passHref>
             <a>AI 비서</a>
