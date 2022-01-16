@@ -2,48 +2,45 @@ import React, { ReactElement, useCallback } from "react";
 import { Input, Form, Button } from "antd";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import useInput from "hooks/useInput";
 import axios from "axios";
 import { useSWRConfig } from "swr";
 
+interface logInRequestType {
+  logInEmail: string;
+  logInPassword: string;
+}
+
 const LoginForm = (): ReactElement => {
   const { mutate } = useSWRConfig();
-  const [email, onChangeEmail, setEmail] = useInput("");
-  const [password, onChangePassword, setPassword] = useInput("");
-  const onSubmit = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (email.trim().length === 0 || password.trim().length === 0) {
-        toast.error("모든 값을 입력해주세요");
-      }
-      try {
-        const result = await axios.post("http://localhost:8000/user/login", {
-          email,
-          password,
-        });
-        setEmail("");
-        setPassword("");
-        mutate("http://localhost:8000/user/login", result.data);
-      } catch (err: any) {
-        console.log(err.response);
-        if (err.response.data.message) {
-          toast.error(err.response.data.message);
-          setEmail("");
-          setPassword("");
-          return;
-        }
-        toast.error("에러가 발생하였습니다.");
-      }
-    },
-    [email, password]
-  );
+  const onSubmit = async (data: logInRequestType) => {
+    const { logInEmail: email, logInPassword: password } = data;
+    if (email.trim().length === 0 || password.trim().length === 0) {
+      toast.error("모든 값을 입력해주세요");
+    }
+    const logInRequest = axios
+      .post("http://localhost:8000/user/login", {
+        email,
+        password,
+      })
+      .then((r) => mutate("http://localhost:8000/user/login", r));
+    toast.promise(logInRequest, {
+      pending: "곧 로그인 됩니다.",
+      success: "로그인에 성공하였습니다.",
+      error: {
+        render({ data }: any) {
+          return data.response.data.message;
+        },
+      },
+    });
+  };
 
   return (
     <Form onFinish={onSubmit}>
-      <Form.Item label="email" name="loginEmail">
-        <Input type="email" value={email} onChange={onChangeEmail} />
+      <Form.Item label="email" name="logInEmail">
+        <Input type="email" />
       </Form.Item>
-      <Form.Item label="passowrd" name="loginPassword">
-        <Input type="password" value={password} onChange={onChangePassword} />
+      <Form.Item label="passowrd" name="logInPassword">
+        <Input type="password" />
       </Form.Item>
       <Button type="primary" htmlType="submit">
         로그인
