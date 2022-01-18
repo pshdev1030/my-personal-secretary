@@ -1,13 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user");
+const dotenv = require("dotenv").config();
 const argon2 = require("argon2");
-
-const errorResponse = {
-  wrongEmail: { message: "이메일의 형식이 아닙니다." },
-  existEmail: { message: "이미 사용중인 이메일입니다." },
-  noEmail: { message: "존재하지 않는 이메일입니다." },
-  wrongPassword: { message: "비밀번호가 일치하지 않습니다." },
-};
 
 router.post("/", async (req, res) => {
   try {
@@ -16,11 +10,15 @@ router.post("/", async (req, res) => {
     const isEmailExist = await User.existEmailValidator(email);
 
     if (!isEmailValid) {
-      return res.status(400).json(errorResponse["wrongEmail"]);
+      return res
+        .status(400)
+        .json("회원가입에 실패하였습니다. 이메일의 형식이 아닙니다.");
     }
 
     if (isEmailExist) {
-      return res.status(409).json(errorResponse["existEmail"]);
+      return res
+        .status(409)
+        .json("회원가입에 실패하였습니다. 이미 사용중인 이메일입니다.");
     }
 
     const hashedPassword = await argon2.hash(password);
@@ -46,19 +44,27 @@ router.post("/login", async (req, res) => {
     const isEmailExist = await User.existEmailValidator(email);
 
     if (!isEmailExist) {
-      return res.status(400).json(errorResponse["noEmail"]);
+      return res
+        .status(400)
+        .json("로그인에 실패하였습니다. 존재하지 않는 이메일입니다.");
     }
 
     const user = await User.findOne().where("email").equals(email);
     const isPasswordCorrect = await argon2.verify(user.password, password);
 
     if (!isPasswordCorrect) {
-      return res.status(400).json(errorResponse["wrongPassword"]);
+      return res
+        .status(400)
+        .json("로그인에 실패하였습니다. 비밀번호가 일치하지 않습니다.");
     }
+    const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+      expiresIn: "3d",
+    });
     return res.status(201).json({
       email: user.email,
       username: user.username,
       id: user._id,
+      accessToken,
     });
   } catch (err) {
     return res.status(500).json(err);
