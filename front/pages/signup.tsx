@@ -1,5 +1,5 @@
 import AppLayout from "@components/AppLayout";
-import SignUpForm from "@components/SignUpForm";
+import SignUpForm from "@components/SignupForm";
 import Router from "next/router";
 import useSWR from "swr";
 import type { NextPage } from "next";

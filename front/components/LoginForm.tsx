@@ -28,7 +28,7 @@ const LoginForm = (): ReactElement => {
       success: "로그인에 성공하였습니다.",
       error: {
         render({ data }: any) {
-          return data.response.data.message;
+          return data.response.data;
         },
       },
     });
