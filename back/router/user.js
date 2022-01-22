@@ -1,7 +1,8 @@
+require("dotenv").config();
 const router = require("express").Router();
 const User = require("../models/user");
-const dotenv = require("dotenv").config();
 const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   try {
@@ -27,11 +28,11 @@ router.post("/", async (req, res) => {
       username,
       password: hashedPassword,
     });
-
+    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN);
     return res.status(201).json({
       email: user.email,
       username: user.username,
-      id: user._id,
+      accessToken,
     });
   } catch (err) {
     return res.status(500).json(err);
@@ -57,13 +58,11 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json("로그인에 실패하였습니다. 비밀번호가 일치하지 않습니다.");
     }
-    const accessToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "3d",
-    });
+
+    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN);
     return res.status(201).json({
       email: user.email,
       username: user.username,
-      id: user._id,
       accessToken,
     });
   } catch (err) {
