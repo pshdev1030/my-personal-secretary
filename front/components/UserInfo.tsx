@@ -2,19 +2,21 @@ import { ReactElement, useCallback } from "react";
 import { Avatar, Card, Button } from "antd";
 import gravatar from "gravatar";
 import { mutate } from "swr";
-const UserInfo = (): ReactElement => {
-  const onLogOut = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    mutate("http://localhost:8000/user/login", null);
-  }, []);
+import { UserType } from "types/user";
 
+interface UserInfoType {
+  onLogOut: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  user: UserType;
+}
+const UserInfo = ({ user, onLogOut }: UserInfoType): ReactElement => {
   return (
-    <Card actions={[]}>
+    <Card>
       <Card.Meta
-        title="박성현"
+        title={user.username}
         avatar={
           <Avatar
             size="large"
-            src={gravatar.url("pshdev1030@gmail.com", {
+            src={gravatar.url(user.email, {
               protocol: "https",
               d: "retro",
             })}

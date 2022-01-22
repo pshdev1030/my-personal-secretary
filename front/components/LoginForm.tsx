@@ -4,42 +4,19 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSWRConfig } from "swr";
+import { LogInRequestType } from "types/user";
 
-interface logInRequestType {
-  logInEmail: string;
-  logInPassword: string;
+interface LogInFormType {
+  onSubmit: (data: LogInRequestType) => void;
 }
 
-const LoginForm = (): ReactElement => {
-  const { mutate } = useSWRConfig();
-  const onSubmit = async (data: logInRequestType) => {
-    const { logInEmail: email, logInPassword: password } = data;
-    if (email.trim().length === 0 || password.trim().length === 0) {
-      toast.error("모든 값을 입력해주세요");
-    }
-    const logInRequest = axios
-      .post("http://localhost:8000/user/login", {
-        email,
-        password,
-      })
-      .then((r) => mutate("http://localhost:8000/user/login", r));
-    toast.promise(logInRequest, {
-      pending: "곧 로그인 됩니다.",
-      success: "로그인에 성공하였습니다.",
-      error: {
-        render({ data }: any) {
-          return data.response.data;
-        },
-      },
-    });
-  };
-
+const LoginForm = ({ onSubmit }: LogInFormType): ReactElement => {
   return (
     <Form onFinish={onSubmit}>
-      <Form.Item label="email" name="logInEmail">
+      <Form.Item label="email" name="logInEmail" required initialValue="">
         <Input type="email" />
       </Form.Item>
-      <Form.Item label="passowrd" name="logInPassword">
+      <Form.Item label="passowrd" name="logInPassword" required initialValue="">
         <Input type="password" />
       </Form.Item>
       <Button type="primary" htmlType="submit">
