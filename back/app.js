@@ -28,6 +28,9 @@ app.get("/", (req, res) => {
 const user = require("./router/user");
 app.use("/user", user);
 
+const schedule = require("./router/schedule");
+app.use("/schedule", schedule);
+
 app.listen(process.env.PORT, () =>
   console.log(`Successfully connected to Server on port ${process.env.PORT}!`)
 );
