@@ -1,41 +1,30 @@
-import FullCalendar from "@fullcalendar/react";
-import interactionPlugin from "@fullcalendar/interaction";
+import FullCalendar, { EventApi, EventClickArg } from "@fullcalendar/react";
+import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { ReactElement, useRef } from "react";
+import { ReactElement } from "react";
+import { EventLocalStateType, EventType } from "types/event";
 
-const Calendar = (): ReactElement => {
+interface CalendarPropsTypes {
+  events: EventApi;
+  onClickEvent: (data: EventClickArg) => void;
+  changeCurState: (date: EventLocalStateType) => void;
+  onClickDate: (arg: DateClickArg) => void;
+}
+
+const Calendar = ({
+  onClickEvent,
+  onClickDate,
+  events,
+}: CalendarPropsTypes): ReactElement => {
   return (
     <div style={{ boxSizing: "border-box", width: "100%", maxHeight: "100%" }}>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         locale="ko"
-        events={[
-          {
-            id: "1",
-            title: "event 1",
-            start: "2022-01-14T10:00:00",
-            end: "2022-01-14T12:00:00",
-          },
-          {
-            id: "2",
-            title: "event 2",
-            start: "2022-01-16T13:00:00",
-            end: "2022-01-16T18:00:00",
-          },
-          {
-            id: "3",
-            title: "event 3",
-            start: "2022-01-16T16:00:00",
-            end: "2022-01-16T19:00:00",
-          },
-          {
-            id: "3",
-            title: "event 3",
-            start: "2022-01-17",
-            end: "2022-01-20",
-          },
-        ]}
+        eventClick={onClickEvent}
+        events={events}
+        dateClick={onClickDate}
         height="auto"
         editable
         selectable
@@ -43,5 +32,6 @@ const Calendar = (): ReactElement => {
     </div>
   );
 };
+// 라이브러리에 next prev 버튼 이벤트가 없어서 events에 데이터를 fetch하는 코드를 작성하였습니다.
 
 export default Calendar;
