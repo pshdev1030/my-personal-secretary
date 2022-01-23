@@ -1,7 +1,7 @@
 import AppLayout from "@components/AppLayout";
 import Calendar from "@components/Calendar";
 import type { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 import { eventFetcher, eventLocalFetcher } from "fetcher/event";
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   );
 
   const { data: events, mutate: eventsMutate } = useSWR(
-    ["http://localhost:8000/schedule", user?.accessToken],
+    user ? ["http://localhost:8000/schedule", user.accessToken] : null,
     eventFetcher,
     {
       revalidateIfStale: false,
@@ -42,22 +42,17 @@ const Home: NextPage = () => {
     setIsOpenedModal(true);
   }, []);
 
-  const onClickEvent = useCallback(
-    (el: EventClickArg) => {
-      const obj: EventType = {
-        id: el.event._def.publicId,
-        title: el.event._def.title,
-        date: el.event.end
-          ? el.event.end?.valueOf()
-          : el.event.start?.valueOf(),
-        start: el.event.start?.valueOf(),
-        end: el.event.end ? el.event.end?.valueOf() : el.event.start?.valueOf(),
-        url: el.event._def.url,
-      };
-      changeCurState({ event: obj, type: "EVENT" });
-    },
-    [events]
-  );
+  const onClickEvent = useCallback((el: EventClickArg) => {
+    const obj: EventType = {
+      id: el.event._def.publicId,
+      title: el.event._def.title,
+      date: el.event.end ? el.event.end?.valueOf() : el.event.start?.valueOf(),
+      start: el.event.start?.valueOf(),
+      end: el.event.end ? el.event.end?.valueOf() : el.event.start?.valueOf(),
+      url: el.event._def.url,
+    };
+    changeCurState({ event: obj, type: "EVENT" });
+  }, []);
 
   const onClickDate = useCallback(
     (date: DateClickArg) =>
@@ -109,7 +104,7 @@ const Home: NextPage = () => {
         console.error(e);
       }
     },
-    [events]
+    [user === undefined]
   );
   const onModifyEvent = useCallback(
     async (data) => {
@@ -154,7 +149,7 @@ const Home: NextPage = () => {
         console.error(e);
       }
     },
-    [events]
+    [user === undefined]
   );
 
   const onRemoveEvent = useCallback(
