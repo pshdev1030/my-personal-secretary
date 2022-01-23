@@ -7,7 +7,7 @@ import UserInfo from "./UserInfo";
 import useSWR from "swr";
 import { loginFetcher } from "fetcher/user";
 import axios from "axios";
-import { LogInRequestType } from "types/user";
+import { LogInFormRequestType } from "types/user";
 
 interface AppLayoutPropsType {
   children: ReactNode;
@@ -23,12 +23,23 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
     mutate(null);
   }, []);
 
-  const onSubmit = useCallback(async (data: LogInRequestType) => {
+  const onSubmit = useCallback(async (data: LogInFormRequestType) => {
     const { logInEmail: email, logInPassword: password } = data;
     if (email.trim().length === 0 || password.trim().length === 0) {
       toast.error("모든 값을 입력해주세요");
       return;
     }
+
+    if (email.length > 60 || email.length <= 1) {
+      toast.error("이메일은 1 이상 60 이하여야 합니다.");
+      return;
+    }
+
+    if (password.length > 60 || password.length <= 1) {
+      toast.error("비밀번호는 1 이상 30 이하여야 합니다.");
+      return;
+    }
+
     const logInRequest = axios
       .post("http://localhost:8000/user/login", {
         email,

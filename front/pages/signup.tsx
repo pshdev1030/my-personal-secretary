@@ -7,7 +7,7 @@ import { loginFetcher } from "fetcher/user";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { SignUpRequestType } from "types/user";
+import { SignUpFormRequestType } from "types/user";
 
 const SignUpPage: NextPage = () => {
   const { data: user, mutate } = useSWR(
@@ -15,7 +15,7 @@ const SignUpPage: NextPage = () => {
     loginFetcher
   );
 
-  const onSubmit = useCallback(async (data: SignUpRequestType) => {
+  const onSubmit = useCallback(async (data: SignUpFormRequestType) => {
     const { signUpEmail: email, signUpPassword: password, username } = data;
     if (
       email.trim().length === 0 ||
@@ -25,6 +25,22 @@ const SignUpPage: NextPage = () => {
       toast.error("모든 값을 입력해주세요");
       return;
     }
+
+    if (email.length > 60 || email.length <= 1) {
+      toast.error("이메일은 1 이상 60 이하여야 합니다.");
+      return;
+    }
+
+    if (username.length > 60 || username.length <= 1) {
+      toast.error("유저명은 1 이상 20 이하여야 합니다.");
+      return;
+    }
+
+    if (password.length > 60 || password.length <= 1) {
+      toast.error("비밀번호는 1 이상 30 이하여야 합니다.");
+      return;
+    }
+
     const signUpRequest = axios
       .post("http://localhost:8000/user", {
         email,

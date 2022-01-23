@@ -4,20 +4,20 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSWRConfig } from "swr";
-import { LogInRequestType } from "types/user";
+import { LogInFormRequestType } from "types/user";
 
 interface LogInFormType {
-  onSubmit: (data: LogInRequestType) => void;
+  onSubmit: (data: LogInFormRequestType) => void;
 }
 
 const LoginForm = ({ onSubmit }: LogInFormType): ReactElement => {
   return (
     <Form onFinish={onSubmit}>
       <Form.Item label="email" name="logInEmail" required initialValue="">
-        <Input type="email" />
+        <Input type="email" maxLength={60} min={1} />
       </Form.Item>
       <Form.Item label="passowrd" name="logInPassword" required initialValue="">
-        <Input type="password" />
+        <Input type="password" maxLength={30} min={1} />
       </Form.Item>
       <Button type="primary" htmlType="submit">
         로그인
