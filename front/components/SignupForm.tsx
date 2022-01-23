@@ -1,10 +1,10 @@
 import React, { ReactElement, useCallback, useRef } from "react";
 import { Input, Form, Button } from "antd";
 import { useSWRConfig } from "swr";
-import { SignUpRequestType } from "types/user";
+import { SignUpFormRequestType } from "types/user";
 
 interface SignUpFormType {
-  onSubmit: (data: SignUpRequestType) => void;
+  onSubmit: (data: SignUpFormRequestType) => void;
 }
 
 const SignUpForm = ({ onSubmit }: SignUpFormType): ReactElement => {

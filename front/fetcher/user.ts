@@ -1,20 +1,8 @@
 import axios, { AxiosResponse, ResponseType } from "axios";
-
-interface loginRequestInterface {
-  url: string;
-  email: string;
-  password: string;
-}
+import { loginRequestInterface, signUpRequestInterface } from "types/user";
 
 export const loginFetcher = ({ url, email, password }: loginRequestInterface) =>
   axios.post(url, { email, password }).then((res) => res.data);
-
-interface signUpRequestInterface {
-  url: string;
-  email: string;
-  username: string;
-  password: string;
-}
 
 export const signUpFetcher = ({
   url,
