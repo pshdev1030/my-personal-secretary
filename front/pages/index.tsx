@@ -87,8 +87,6 @@ const Home: NextPage = () => {
           url,
           title,
         };
-        const newEvents =
-          events.length !== 0 ? [...events, newEvent] : [newEvent];
 
         const newEventRequest = axios
           .post(
@@ -176,6 +174,7 @@ const Home: NextPage = () => {
         });
 
         setIsOpenedModal(false);
+        return;
       } catch (e) {
         console.error(e);
       }
@@ -197,37 +196,67 @@ const Home: NextPage = () => {
           <div>로그인하여 일정을 확인하세요.</div>
         )}
       </AppLayout>
-      <Modal
-        title={
-          curState?.type === "EVENT" ? "이벤트 수정하기" : "이벤트 작성하기"
-        }
-        onCloseModal={onCloseModal}
-        visible={isOpenedModal}
-        footer={[
-          <Button
-            key="submitEventButton"
-            htmlType="submit"
-            type="primary"
-            form="EventForm"
-          >
-            {curState?.type === "EVENT" ? "수정" : "등록"}
-          </Button>,
-          <Button
-            key="deleteEventButton"
-            danger
-            onClick={onRemoveEvent}
-            hidden={curState?.type !== "EVENT"}
-          >
-            삭제
-          </Button>,
-        ]}
-      >
-        <EventForm
-          curEvent={curState?.event}
-          onSubmit={curState?.type === "EVENT" ? onModifyEvent : onAddEvent}
-        />
-      </Modal>
+      {curState?.type === "EVENT" ? (
+        <Modal
+          title="이벤트 수정하기"
+          onCloseModal={onCloseModal}
+          visible={isOpenedModal}
+          footer={[
+            <ChangeButton key="changeEventButton" />,
+            <RemoveButton
+              onRemoveEvent={onRemoveEvent}
+              key="deleteEventButton"
+            />,
+          ]}
+        >
+          <EventForm
+            curEvent={curState?.event}
+            formId="eventEditForm"
+            onSubmit={onModifyEvent}
+          />
+        </Modal>
+      ) : (
+        <Modal
+          title="이벤트 작성하기"
+          onCloseModal={onCloseModal}
+          visible={isOpenedModal}
+          footer={[<SubmitButton key="submitnewEventButton" />]}
+        >
+          <EventForm
+            formId="newEventForm"
+            curEvent={curState?.event}
+            onSubmit={onAddEvent}
+          />
+        </Modal>
+      )}
     </>
+  );
+};
+
+const SubmitButton = () => {
+  return (
+    <Button htmlType="submit" type="primary" form="newEventForm">
+      등록
+    </Button>
+  );
+};
+
+const ChangeButton = () => {
+  return (
+    <Button htmlType="submit" type="primary" form="eventEditForm">
+      수정
+    </Button>
+  );
+};
+interface RemoveButtonType {
+  onRemoveEvent: (data: any) => Promise<void>;
+}
+
+const RemoveButton = ({ onRemoveEvent }: RemoveButtonType) => {
+  return (
+    <Button danger onClick={onRemoveEvent}>
+      삭제
+    </Button>
   );
 };
 

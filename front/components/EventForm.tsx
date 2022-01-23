@@ -8,16 +8,18 @@ import { EventType } from "types/event";
 interface EventFormPropsType {
   onSubmit: (data: EventType) => void;
   curEvent: EventType | undefined;
+  formId: string;
 }
 
 const EventForm = ({
   onSubmit,
   curEvent,
+  formId,
 }: EventFormPropsType): ReactElement => {
   return (
     <Form
       onFinish={onSubmit}
-      id="EventForm"
+      id={formId}
       initialValues={{
         eventTitle: curEvent?.title ? curEvent.title : "",
         eventDate: curEvent?.start
@@ -27,16 +29,16 @@ const EventForm = ({
         eventId: curEvent?.id ? curEvent?.id : "",
       }}
     >
-      <Form.Item label="title" name="eventTitle" required>
+      <Form.Item label="제목" name="eventTitle" required>
         <Input type="text" />
       </Form.Item>
-      <Form.Item label="date" name="eventDate" required>
+      <Form.Item label="날짜" name="eventDate" required>
         <DatePicker.RangePicker
           format="YY/MM/DD HH:mm"
           showTime={{ format: "HH:mm" }}
         />
       </Form.Item>
-      <Form.Item label="url" name="eventUrl">
+      <Form.Item label="링크" name="eventUrl">
         <Input type="url" />
       </Form.Item>
       <Form.Item label="id" name="eventId" hidden>
