@@ -32,6 +32,5 @@ const Calendar = ({
     </div>
   );
 };
-// 라이브러리에 next prev 버튼 이벤트가 없어서 events에 데이터를 fetch하는 코드를 작성하였습니다.
 
 export default Calendar;
