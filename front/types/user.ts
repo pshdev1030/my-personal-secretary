@@ -1,10 +1,10 @@
-export interface SignUpRequestType {
+export interface SignUpFormRequestType {
   signUpEmail: string;
   signUpPassword: string;
   username: string;
 }
 
-export interface LogInRequestType {
+export interface LogInFormRequestType {
   logInEmail: string;
   logInPassword: string;
 }
@@ -12,4 +12,17 @@ export interface LogInRequestType {
 export interface UserType {
   email: string;
   username: string;
+}
+
+export interface loginRequestInterface {
+  url: string;
+  email: string;
+  password: string;
+}
+
+export interface signUpRequestInterface {
+  url: string;
+  email: string;
+  username: string;
+  password: string;
 }
