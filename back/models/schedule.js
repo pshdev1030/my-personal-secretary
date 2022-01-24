@@ -50,5 +50,12 @@ ScheduleSchema.methods.replaceSchedule = function (data) {
   return this.save();
 };
 
+ScheduleSchema.methods.searchSchedule = function (start, end) {
+  const periodList = this.scheduleList.filter(
+    (ele) => ele.start >= start || ele.end <= end
+  );
+  return periodList;
+};
+
 module.exports =
   mongoose.models.Schedule || mongoose.model("Schedule", ScheduleSchema);

@@ -10,8 +10,25 @@ router.get("/", authenticateToken, async (req, res) => {
     if (!userItemList) {
       userItemList = await Schedule.create({ userId, scheduleList: [] });
     }
-
     return res.status(200).json(userItemList.scheduleList);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+// router.get("/period", authenticateToken, async (req, res) => {
+router.get("/period", async (req, res) => {
+  try {
+    const { start, end, userId } = req.body;
+    let userItemList = await Schedule.findOne().where("userId").equals(userId);
+
+    const periodList = userItemList.searchSchedule(start, end);
+
+    if (!userItemList) {
+      userItemList = await Schedule.create({ userId, scheduleList: [] });
+    }
+
+    return res.status(200).json(periodList);
   } catch (e) {
     console.error(e);
   }
