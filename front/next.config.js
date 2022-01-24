@@ -9,4 +9,17 @@ const withTM = require("next-transpile-modules")([
   "@fullcalendar/timegrid",
 ]);
 
-module.exports = withTM({});
+const withPlugins = require("next-compose-plugins");
+
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination: `https://dev.aistudios.com/:path*`,
+      },
+    ];
+  },
+};
+
+module.exports = withPlugins([withTM({})], nextConfig);
