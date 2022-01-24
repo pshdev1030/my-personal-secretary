@@ -66,6 +66,8 @@ router.post("/login", async (req, res) => {
       email: user.email,
       username: user.username,
       accessToken,
+      appId: "aistudios.com",
+      userKey: "6443234b-77d5-4013-bfd6-bb9399f317d9",
     });
   } catch (err) {
     return res.status(500).json(err);
