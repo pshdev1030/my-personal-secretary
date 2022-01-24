@@ -13,12 +13,15 @@ import { loginFetcher } from "fetcher/user";
 import { EventLocalStateType, EventType } from "types/event";
 import { EventClickArg } from "@fullcalendar/react";
 import { DateClickArg } from "@fullcalendar/interaction";
+import { UserType } from "types/user";
 
 const Home: NextPage = () => {
-  const { data: user } = useSWR(
+  const { data: user } = useSWR<UserType>(
     "http://localhost:8000/user/login",
     loginFetcher
   );
+
+  console.log(user);
 
   const { data: events, mutate: eventsMutate } = useSWR(
     user ? ["http://localhost:8000/schedule", user.accessToken] : null,
@@ -69,6 +72,9 @@ const Home: NextPage = () => {
 
   const onAddEvent = useCallback(
     async (data) => {
+      if (!user) {
+        return;
+      }
       try {
         const { eventDate: date, eventTitle: title, eventUrl: url } = data;
         if (title.trim().length === 0 || date.length === 0) {
@@ -108,6 +114,9 @@ const Home: NextPage = () => {
   );
   const onModifyEvent = useCallback(
     async (data) => {
+      if (!user) {
+        return;
+      }
       try {
         const {
           eventDate: date,
@@ -155,6 +164,9 @@ const Home: NextPage = () => {
   const onRemoveEvent = useCallback(
     async (data) => {
       try {
+        if (!user) {
+          return;
+        }
         const removeEventRequest = axios
           .delete("http://localhost:8000/schedule", {
             headers: { Authorization: `Bearer ${user.accessToken}` },

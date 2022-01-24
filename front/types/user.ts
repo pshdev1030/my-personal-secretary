@@ -12,6 +12,9 @@ export interface LogInFormRequestType {
 export interface UserType {
   email: string;
   username: string;
+  accessToken: string;
+  appId: string;
+  userKey: string;
 }
 
 export interface loginRequestInterface {
