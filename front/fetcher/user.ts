@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, ResponseType } from "axios";
+import axios from "axios";
 import { loginRequestInterface, signUpRequestInterface } from "types/user";
 
 export const loginFetcher = ({ url, email, password }: loginRequestInterface) =>
