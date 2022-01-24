@@ -20,11 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             margin-left: 0 !important;
           }
 
-          .ant-col:first-child {
+          .ant-col:first-of-type {
             padding-left: 0 !important;
           }
 
-          .ant-col:last-child {
+          .ant-col:last-of-type {
             padding-right: 0 !important;
           }
         `}
