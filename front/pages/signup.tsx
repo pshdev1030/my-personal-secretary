@@ -7,10 +7,10 @@ import { loginFetcher } from "fetcher/user";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { SignUpFormRequestType } from "types/user";
+import { SignUpFormRequestType, UserType } from "types/user";
 
 const SignUpPage: NextPage = () => {
-  const { data: user, mutate } = useSWR(
+  const { data: user, mutate } = useSWR<UserType>(
     "http://localhost:8000/user/login",
     loginFetcher
   );

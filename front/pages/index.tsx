@@ -21,8 +21,6 @@ const Home: NextPage = () => {
     loginFetcher
   );
 
-  console.log(user);
-
   const { data: events, mutate: eventsMutate } = useSWR(
     user ? ["http://localhost:8000/schedule", user.accessToken] : null,
     eventFetcher,

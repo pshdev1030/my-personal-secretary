@@ -73,13 +73,6 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
           </Menu.Item>
         )}
         {user && (
-          <Menu.Item key="Schedule">
-            <Link href="/schedule" passHref>
-              <a>내 일정</a>
-            </Link>
-          </Menu.Item>
-        )}
-        {user && (
           <Menu.Item key="Secretary">
             <Link href="/secretary" passHref>
               <a>AI 비서</a>
