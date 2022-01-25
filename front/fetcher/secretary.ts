@@ -7,7 +7,6 @@ export const secretaryFetcher = async (
   userKey: string,
   tokenUrl: string
 ) => {
-  console.log(clientTokenUrl, appId, userKey, tokenUrl);
   const clientToken = await axios
     .get(`${clientTokenUrl}?appId=${appId}&userKey=${userKey}`)
     .then((res) => ({
