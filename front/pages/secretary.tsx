@@ -77,15 +77,15 @@ const SecretaryPage: NextPage = () => {
           if (ele.start === ele.end) {
             // 요일을 받아오기 위해 format을 정해줌
             const eventDate = moment(ele.date).format(
-              "YYYY년 MM월 DD일 dd요일 HH시mm분"
+              "YYYY년 M월 D일 dd요일 k시m분"
             );
             return `${eventDate}에는 ${ele.title}일정이 있습니다. `;
           }
           const eventStart = moment(ele.start).format(
-            "YYYY년 MM월 DD일 dd요일 HH시mm분"
+            "YYYY년 M월 D일 dd요일 k시m분"
           );
           const eventEnd = moment(ele.start).format(
-            "YYYY년 MM월 DD일 dd요일 HH시mm분"
+            "YYYY년 M월 D일 dd요일 k시m분"
           );
           return `${eventStart}부터 ${eventEnd}까지는 ${ele.title} 일정이 있습니다.`;
         });
