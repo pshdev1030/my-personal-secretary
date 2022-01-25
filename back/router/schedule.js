@@ -16,10 +16,11 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
-// router.get("/period", authenticateToken, async (req, res) => {
-router.get("/period", async (req, res) => {
+router.get("/period", authenticateToken, async (req, res) => {
   try {
-    const { start, end, userId } = req.body;
+    const start = Number(req.query.start);
+    const end = Number(req.query.end);
+    const { userId } = req.body;
     let userItemList = await Schedule.findOne().where("userId").equals(userId);
 
     const periodList = userItemList.searchSchedule(start, end);

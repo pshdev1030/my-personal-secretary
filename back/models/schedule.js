@@ -52,7 +52,9 @@ ScheduleSchema.methods.replaceSchedule = function (data) {
 
 ScheduleSchema.methods.searchSchedule = function (start, end) {
   const periodList = this.scheduleList.filter(
-    (ele) => ele.start >= start || ele.end <= end
+    (ele) =>
+      (ele.start >= start && ele.start <= end) ||
+      (ele.end >= start && ele.end <= end)
   );
   return periodList;
 };
