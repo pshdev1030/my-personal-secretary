@@ -1,11 +1,13 @@
 import axios from "axios";
-import { SecretaryStateType, TokenType } from "types/secretary";
-export const secretaryFetcher = async ({
-  clientTokenUrl,
-  appId,
-  userKey,
-  tokenUrl,
-}: TokenType) => {
+import { SecretaryStateType } from "types/secretary";
+import { string } from "yup";
+export const secretaryFetcher = async (
+  clientTokenUrl: string,
+  appId: string,
+  userKey: string,
+  tokenUrl: string
+) => {
+  console.log(clientTokenUrl, appId, userKey, tokenUrl);
   const clientToken = await axios
     .get(`${clientTokenUrl}?appId=${appId}&userKey=${userKey}`)
     .then((res) => ({

@@ -13,15 +13,10 @@ import { EventType } from "types/event";
 import { UserType } from "types/user";
 
 const SecretaryPage: NextPage = () => {
-  const { data: user } = useSWR<UserType>(`${dbUrl}/user/login`, loginFetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
-  const timerRef = useRef();
+  const { data: user } = useSWR<UserType>(`${dbUrl}/user/login`, loginFetcher);
 
   const { data: token } = useSWR(
-    user
+    user?.appId && user?.userKey
       ? [
           `/api/odin/generateClientToken`,
           user.appId,
@@ -29,12 +24,7 @@ const SecretaryPage: NextPage = () => {
           "/api/odin/generateToken",
         ]
       : null,
-    secretaryFetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+    secretaryFetcher
   );
 
   const { data: localData, mutate: localMutate } = useSWR(

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Form, DatePicker, Button } from "antd";
 import moment from "moment";
-import { SecretaryStateType, TokenType } from "types/secretary";
+import { SecretaryStateType } from "types/secretary";
 import { UserType } from "types/user";
 import ReactPlayer from "react-player";
 import styled from "@emotion/styled";
@@ -9,7 +9,12 @@ import styled from "@emotion/styled";
 interface SecretaryType {
   localData: SecretaryStateType | undefined;
   onSubmit: (data: any) => void;
-  token: TokenType;
+  token: {
+    clientTokenUrl: string;
+    appId: string;
+    userKey: string;
+    tokenUrl: string;
+  };
   user: UserType | undefined;
 }
 
