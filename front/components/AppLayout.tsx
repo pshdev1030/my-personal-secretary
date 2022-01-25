@@ -8,16 +8,14 @@ import useSWR from "swr";
 import { loginFetcher } from "fetcher/user";
 import axios from "axios";
 import { LogInFormRequestType } from "types/user";
+import { dbUrl } from "constant/api";
 
 interface AppLayoutPropsType {
   children: ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
-  const { data: user, mutate } = useSWR(
-    "http://localhost:8000/user/login",
-    loginFetcher
-  );
+  const { data: user, mutate } = useSWR(`${dbUrl}/user/login`, loginFetcher);
 
   const onLogOut = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     mutate(null);
@@ -41,7 +39,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
     }
 
     const logInRequest = axios
-      .post("http://localhost:8000/user/login", {
+      .post(`${dbUrl}/user/login`, {
         email,
         password,
       })

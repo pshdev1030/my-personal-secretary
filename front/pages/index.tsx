@@ -14,15 +14,13 @@ import { EventLocalStateType, EventType } from "types/event";
 import { EventClickArg } from "@fullcalendar/react";
 import { DateClickArg } from "@fullcalendar/interaction";
 import { UserType } from "types/user";
+import { dbUrl } from "constant/api";
 
 const Home: NextPage = () => {
-  const { data: user } = useSWR<UserType>(
-    "http://localhost:8000/user/login",
-    loginFetcher
-  );
+  const { data: user } = useSWR<UserType>(`${dbUrl}/user/login`, loginFetcher);
 
   const { data: events, mutate: eventsMutate } = useSWR(
-    user ? ["http://localhost:8000/schedule", user.accessToken] : null,
+    user ? [`${dbUrl}/schedule`, user.accessToken] : null,
     eventFetcher,
     {
       revalidateIfStale: false,
@@ -33,7 +31,12 @@ const Home: NextPage = () => {
 
   const { data: curState, mutate: localMutate } = useSWR(
     "EventFormLocalState",
-    eventLocalFetcher
+    eventLocalFetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   const [isOpenedModal, setIsOpenedModal] = useState<boolean>(false);
@@ -89,7 +92,7 @@ const Home: NextPage = () => {
 
         const newEventRequest = axios
           .post(
-            "http://localhost:8000/schedule",
+            `${dbUrl}/schedule`,
             { newEvent },
             {
               headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -143,7 +146,7 @@ const Home: NextPage = () => {
 
         const modifyEventRequest = axios
           .put(
-            "http://localhost:8000/schedule",
+            `${dbUrl}/schedule`,
             { newEvent },
             {
               headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -178,7 +181,7 @@ const Home: NextPage = () => {
           return;
         }
         const removeEventRequest = axios
-          .delete("http://localhost:8000/schedule", {
+          .delete(`${dbUrl}/schedule`, {
             headers: { Authorization: `Bearer ${user.accessToken}` },
             data: { scheduleId: curState?.event.id },
           })

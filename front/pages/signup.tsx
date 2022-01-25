@@ -7,10 +7,11 @@ import { useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { SignUpFormRequestType, UserType } from "types/user";
+import { dbUrl } from "constant/api";
 
 const SignUpPage: NextPage = () => {
   const { data: user, mutate } = useSWR<UserType>(
-    "http://localhost:8000/user/login",
+    `${dbUrl}/user/login`,
     loginFetcher
   );
 
@@ -41,7 +42,7 @@ const SignUpPage: NextPage = () => {
     }
 
     const signUpRequest = axios
-      .post("http://localhost:8000/user", {
+      .post(`${dbUrl}/user`, {
         email,
         username,
         password,
