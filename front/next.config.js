@@ -15,8 +15,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/:path*",
-        destination: `https://dev.aistudios.com/:path*`,
+        source: "/api/:path*",
+        destination: `https://dev.aistudios.com/api/:path*`,
       },
     ];
   },
