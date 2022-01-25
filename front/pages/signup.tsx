@@ -1,6 +1,5 @@
 import AppLayout from "@components/AppLayout";
 import SignUpForm from "@components/SignUpForm";
-import Router from "next/router";
 import useSWR from "swr";
 import type { NextPage } from "next";
 import { loginFetcher } from "fetcher/user";
@@ -58,10 +57,6 @@ const SignUpPage: NextPage = () => {
       },
     });
   }, []);
-
-  if (user) {
-    Router.push("/");
-  }
 
   return (
     <div>
