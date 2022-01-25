@@ -8,12 +8,17 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { SignUpFormRequestType, UserType } from "types/user";
 import { dbUrl } from "constant/api";
+import Router from "next/router";
 
 const SignUpPage: NextPage = () => {
   const { data: user, mutate } = useSWR<UserType>(
     `${dbUrl}/user/login`,
     loginFetcher
   );
+
+  if (user) {
+    Router.push("/");
+  }
 
   const onSubmit = useCallback(async (data: SignUpFormRequestType) => {
     const { signUpEmail: email, signUpPassword: password, username } = data;
