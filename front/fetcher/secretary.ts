@@ -1,10 +1,11 @@
 import axios from "axios";
-export const secretaryFetcher = async (
-  clientTokenUrl: string,
-  appId: string,
-  userKey: string,
-  tokenUrl: string
-) => {
+import { SecretaryStateType, TokenType } from "types/secretary";
+export const secretaryFetcher = async ({
+  clientTokenUrl,
+  appId,
+  userKey,
+  tokenUrl,
+}: TokenType) => {
   const clientToken = await axios
     .get(`${clientTokenUrl}?appId=${appId}&userKey=${userKey}`)
     .then((res) => ({
@@ -26,3 +27,12 @@ export const secretaryFetcher = async (
 
   return token;
 };
+
+export const secretaryLocalFetcher = (url: string): SecretaryStateType => ({
+  videoLoading: false,
+  progress: 0,
+  videoDone: false,
+  videoError: false,
+  videoURL: null,
+  videoKey: null,
+});
