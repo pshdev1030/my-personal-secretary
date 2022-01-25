@@ -1,7 +1,6 @@
 import { ReactElement, useCallback } from "react";
 import { Avatar, Card, Button } from "antd";
 import gravatar from "gravatar";
-import { mutate } from "swr";
 import { UserType } from "types/user";
 
 interface UserInfoType {
@@ -17,6 +16,7 @@ const UserInfo = ({ user, onLogOut }: UserInfoType): ReactElement => {
         avatar={
           <Avatar
             size="large"
+            // gravatar로 유저이미지 출력
             src={gravatar.url(user.email, {
               protocol: "https",
               d: "retro",

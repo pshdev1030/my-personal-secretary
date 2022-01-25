@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>My Personal Secretary</title>
       </Head>
       <Global
+        // 가로방향 스크롤바가 생기는 걸 방지하기 위한 글로벌 css
         styles={css`
           .ant-row {
             margin-right: 0 !important;
@@ -43,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               key === `${dbUrl}/user/login` ||
               "EventFormLocalState" ||
               "SecretaryLocalData"
+              // 로컬상태나 로그인 상태의 경우 에러를 반환하지 않음
             )
               return;
 

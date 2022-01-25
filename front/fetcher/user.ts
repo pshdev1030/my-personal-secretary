@@ -1,13 +1,7 @@
 import axios from "axios";
-import { loginRequestInterface, signUpRequestInterface } from "types/user";
+import { loginRequestInterface } from "types/user";
+
+//로그인 시 사용할 fetcher
 
 export const loginFetcher = ({ url, email, password }: loginRequestInterface) =>
   axios.post(url, { email, password }).then((res) => res.data);
-
-export const signUpFetcher = ({
-  url,
-  email,
-  password,
-  username,
-}: signUpRequestInterface) =>
-  axios.post(url, { email, password, username }).then((res) => res.data);

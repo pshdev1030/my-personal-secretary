@@ -42,7 +42,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       toast.error("비밀번호는 1 이상 30 이하여야 합니다.");
       return;
     }
-
+    // 로그인 성공후 로컬 상태를 업데이트(갱신 포함)
     const logInRequest = axios
       .post(`${dbUrl}/user/login`, {
         email,
@@ -53,6 +53,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       pending: "곧 로그인 됩니다.",
       success: "로그인에 성공하였습니다.",
       error: {
+        // 서버에서 status와 내려준 에러일경우 출력, 아닐경우 문제가 발생하여습니다 출력
         render({ data }: any) {
           return data.response.data
             ? data.response.data
@@ -87,6 +88,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
+          {/* 로그인 되어있을 경우 유저 정보를 렌더링함 */}
           {user ? (
             <UserInfo onLogOut={onLogOut} user={user} />
           ) : (

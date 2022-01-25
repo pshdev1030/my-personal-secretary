@@ -16,6 +16,7 @@ interface SecretaryType {
 const Secretary = ({ onSubmit, localData }: SecretaryType): ReactElement => {
   return (
     <>
+      {/* 비디오를 불러오고 있을 경우 퍼센테이지를 렌더링 */}
       {localData?.videoLoading && (
         <ProgressWrapper>{localData?.progress}% 완료...</ProgressWrapper>
       )}
@@ -24,11 +25,13 @@ const Secretary = ({ onSubmit, localData }: SecretaryType): ReactElement => {
           <DatePicker.RangePicker />
         </Form.Item>
       </Form>
+      {/* 비디오를 불러오고 있지 않을 경우 불러오기 버튼을 렌더링 */}
       {!localData?.videoLoading && (
         <Button type="primary" htmlType="submit" form="secretaryForm">
           불러오기
         </Button>
       )}
+      {/* 비디오 불러오기가 끝났고 videoURL이 있을 경우 비디오를 다 불러온 것이므로 비디오 컴포넌트를 렌더링 */}
       {localData?.videoDone && localData?.videoURL && (
         <ReactPlayer url={localData.videoURL} controls />
       )}

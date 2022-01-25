@@ -58,6 +58,7 @@ const SignUpPage: NextPage = () => {
       pending: "회원가입 중입니다.",
       success: "회원가입에 성공하였습니다. 곧 메인페이지로 이동합니다.",
       error: {
+        // 서버에서 보내준 메시지가 있을경우 그걸 출력, 없을경우 기본 메시지를 출력
         render({ data }: any) {
           return data.response.data
             ? data.response.data
