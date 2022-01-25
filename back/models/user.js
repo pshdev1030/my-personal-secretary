@@ -36,6 +36,8 @@ UserSchema.statics.existEmailValidator = async function (value) {
   return result;
 };
 
+// 해당 유저가 존재하는지 확인한다.
+
 UserSchema.statics.findUser = async function (id) {
   const result = (await this.findOne({ _id: id })) ? true : false;
   return result;

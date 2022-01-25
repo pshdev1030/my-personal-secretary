@@ -3,23 +3,29 @@ const mongoose = require("mongoose");
 // 개별 일정 모델
 const ScheduleItemSchema = new mongoose.Schema(
   {
+    //시작일
     start: {
       type: Number,
     },
+    //일정 아이디
     id: {
       type: String,
       require: true,
     },
+    //끝
     end: {
       type: Number,
     },
+    //날짜(시작일과 끝이 같을 경우)
     date: {
       type: Number,
     },
+    //제목
     title: {
       type: String,
       require: true,
     },
+    // url(클릭시 이동)
     url: {
       type: String,
     },
@@ -31,9 +37,11 @@ const ScheduleItemSchema = new mongoose.Schema(
 
 const ScheduleSchema = new mongoose.Schema({
   userId: {
+    //유저 아이디
     type: String,
     require: true,
   },
+  // 유저 일정 목록, _id를 false로 하고 커스텀 id속성으로 탐색함
   scheduleList: [ScheduleItemSchema, { _id: false }],
 });
 
