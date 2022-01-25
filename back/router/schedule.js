@@ -29,6 +29,14 @@ router.get("/period", authenticateToken, async (req, res) => {
 
     const periodList = userItemList.searchSchedule(start, end);
 
+    periodList.sort(function (a, b) {
+      if (a.start > b.start) return 1;
+      if (a.start === b.start) return 0;
+      if (a.start < b.start) return -1;
+    });
+
+    console.log(periodList);
+
     if (!userItemList) {
       if (User.findUser(userId)) {
         res.status(401).json("존재하지 않는 사용자입니다.");
