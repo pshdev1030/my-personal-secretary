@@ -6,10 +6,3 @@ export interface SecretaryStateType {
   videoURL: null | string;
   videoKey: null | string;
 }
-
-export interface TokenType {
-  clientTokenUrl: string;
-  appId: string;
-  userKey: string;
-  tokenUrl: string;
-}
