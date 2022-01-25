@@ -9,21 +9,11 @@ import styled from "@emotion/styled";
 interface SecretaryType {
   localData: SecretaryStateType | undefined;
   onSubmit: (data: any) => void;
-  token: {
-    clientTokenUrl: string;
-    appId: string;
-    userKey: string;
-    tokenUrl: string;
-  };
-  user: UserType | undefined;
 }
 
-const Secretary = ({
-  onSubmit,
-  localData,
-  token,
-  user,
-}: SecretaryType): ReactElement => {
+// ai 비서 호출하는 컴포넌트
+
+const Secretary = ({ onSubmit, localData }: SecretaryType): ReactElement => {
   return (
     <>
       {localData?.videoLoading && (

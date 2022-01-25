@@ -14,13 +14,18 @@ interface AppLayoutPropsType {
   children: ReactNode;
 }
 
+// 공통 레이아웃을 정의
+
 const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
+  // 로그인이 유무에 따라 다른 레이아웃을 보여주기 위함
   const { data: user, mutate } = useSWR(`${dbUrl}/user/login`, loginFetcher);
 
+  // 로그아웃 함수, 로컬데이터를 없앰
   const onLogOut = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     mutate(null);
   }, []);
 
+  // 로그인 폼 제출하는 함수
   const onSubmit = useCallback(async (data: LogInFormRequestType) => {
     const { logInEmail: email, logInPassword: password } = data;
     if (email.trim().length === 0 || password.trim().length === 0) {
@@ -93,6 +98,7 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
         </Col>
       </Row>
 
+      {/* Toast를 띄우기 위해 공통 레이아웃 컴포넌트에 ToastContainer 선언 */}
       <ToastContainer
         position="top-right"
         autoClose={2000}

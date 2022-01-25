@@ -8,6 +8,7 @@ interface UserInfoType {
   onLogOut: (e: React.MouseEvent<HTMLButtonElement>) => void;
   user: UserType;
 }
+// gravatar를 이용한 유저 정보
 const UserInfo = ({ user, onLogOut }: UserInfoType): ReactElement => {
   return (
     <Card>

@@ -4,6 +4,8 @@ const User = require("../models/user");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
+// 회원가입
+
 router.post("/", async (req, res) => {
   try {
     const { email, username, password } = req.body;
@@ -29,6 +31,9 @@ router.post("/", async (req, res) => {
       password: hashedPassword,
     });
     const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN);
+
+    // 회원가입후 자동 로그인을 위해 같은 정보를 전송함
+
     return res.status(201).json({
       email: user.email,
       username: user.username,
@@ -40,6 +45,8 @@ router.post("/", async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
+// 로그인
 
 router.post("/login", async (req, res) => {
   try {
@@ -60,6 +67,8 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json("로그인에 실패하였습니다. 비밀번호가 일치하지 않습니다.");
     }
+
+    // 토큰을 생성하여 전송
 
     const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN);
     return res.status(201).json({

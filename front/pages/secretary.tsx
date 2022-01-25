@@ -13,6 +13,7 @@ import { EventType } from "types/event";
 import { UserType } from "types/user";
 
 const SecretaryPage: NextPage = () => {
+  // 유저정보와 토큰을 저장
   const { data: user } = useSWR<UserType>(`${dbUrl}/user/login`, loginFetcher);
 
   const { data: token } = useSWR(
@@ -27,6 +28,8 @@ const SecretaryPage: NextPage = () => {
     secretaryFetcher
   );
 
+  // 로컬상태, 현재 로딩중인지 아닌지 영상이 있는지 등의 데이터를 저장함
+
   const { data: localData, mutate: localMutate } = useSWR(
     user ? "SecretaryLocalData" : null,
     secretaryLocalFetcher,
@@ -40,6 +43,7 @@ const SecretaryPage: NextPage = () => {
   const onSubmit = useCallback(
     async (data) => {
       try {
+        // 유효성 검사
         if (!user || !token) {
           toast.error(
             "유저정보가 없거나 토큰의 유효기간이 만료되었습니다. 잠시 후 다시 시도해주세요"
@@ -57,6 +61,8 @@ const SecretaryPage: NextPage = () => {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           })
           .then((res) => res.data);
+
+        // ai 비서 템플릿 생성
 
         const templateArr = modifyEventRequest.map((ele: EventType) => {
           if (ele.start === ele.end) {
@@ -78,6 +84,7 @@ const SecretaryPage: NextPage = () => {
         templateArr.push(`오늘도 좋은 하루 되세요`);
         const template = templateArr.join("\n");
 
+        // 비디오를 만듬
         const video = await axios
           .post("/api/odin/makeVideo", {
             appId: user.appId,
@@ -126,53 +133,8 @@ const SecretaryPage: NextPage = () => {
     [user === null, token]
   );
 
-  const getProcess = useCallback(async () => {
-    try {
-      if (!user || !token || !localData?.videoKey) {
-        toast.error(
-          "유저정보가 없거나 토큰의 유효기간이 만료되었습니다. 잠시 후 다시 시도해주세요"
-        );
-        return;
-      }
-      const data = await axios
-        .post("/api/odin/findProject", {
-          appId: user.appId,
-          platform: "web",
-          isClientToken: true,
-          token: token.token,
-          uuid: user.userKey,
-          sdk_v: "1.0",
-          clientHostname: user.appId,
-          key: localData.videoKey,
-        })
-        .then((res) => res.data);
-
-      if (data.data.progress !== 100) {
-        localMutate(
-          {
-            ...localData,
-            progress: data.data.progress,
-          },
-          false
-        );
-      } else if (data.data.progress === 100) {
-        localMutate(
-          {
-            ...localData,
-            videoLoading: false,
-            progress: 100,
-            videoKey: null,
-            videoDone: true,
-            videoError: false,
-            videoURL: data.data.video,
-          },
-          false
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [user === null, token, localData, localData?.videoKey !== null]);
+  // 다운중인 비디오가 있을 경우 6초마다 progress를 받아오는 요청을 보냄
+  // return을 통해 언마운트시 없애줌
 
   useEffect(() => {
     try {
@@ -238,12 +200,7 @@ const SecretaryPage: NextPage = () => {
     <>
       <AppLayout>
         {token && user ? (
-          <Secretary
-            localData={localData}
-            onSubmit={onSubmit}
-            token={token}
-            user={user}
-          />
+          <Secretary localData={localData} onSubmit={onSubmit} />
         ) : (
           <div>사용자 정보를 받아오는 중..</div>
         )}

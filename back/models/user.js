@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
+//사용자 정보를 저장하는 모델
 const UserSchema = new mongoose.Schema(
   {
     email: {

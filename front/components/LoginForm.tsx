@@ -10,6 +10,7 @@ interface LogInFormType {
   onSubmit: (data: LogInFormRequestType) => void;
 }
 
+// antd를 이용한 유효성 검사
 const LoginForm = ({ onSubmit }: LogInFormType): ReactElement => {
   return (
     <Form onFinish={onSubmit}>

@@ -16,6 +16,8 @@ import { DateClickArg } from "@fullcalendar/interaction";
 import { UserType } from "types/user";
 import { dbUrl } from "constant/api";
 
+// 기본 페이지
+
 const Home: NextPage = () => {
   const { data: user } = useSWR<UserType>(`${dbUrl}/user/login`, loginFetcher);
 
@@ -28,6 +30,8 @@ const Home: NextPage = () => {
       revalidateOnReconnect: false,
     }
   );
+
+  // 로컬 상태
 
   const { data: curState, mutate: localMutate } = useSWR(
     "EventFormLocalState",
@@ -46,6 +50,7 @@ const Home: NextPage = () => {
     setIsOpenedModal(true);
   }, []);
 
+  // 이벤트를 클릭할 경우 로컬상태에 이벤트를 등록
   const onClickEvent = useCallback((el: EventClickArg) => {
     const obj: EventType = {
       id: el.event._def.publicId,
@@ -57,6 +62,8 @@ const Home: NextPage = () => {
     };
     changeCurState({ event: obj, type: "EVENT" });
   }, []);
+
+  // 날짜를 클릭할 경우 날짜를 로컬상태에 등록
 
   const onClickDate = useCallback(
     (date: DateClickArg) =>
@@ -82,6 +89,7 @@ const Home: NextPage = () => {
           toast.error("모든 값을 입력해주세요");
           return;
         }
+        // start와 end가 같을경우 null이 누락되는 현상이 있어 다르게 값을 넣음
         const newEvent = {
           date: date.length !== 2 ? date[1].valueOf() : date[0].valueOf(),
           start: date[0].valueOf(),
@@ -222,6 +230,7 @@ const Home: NextPage = () => {
           <div>로그인하여 일정을 확인하세요.</div>
         )}
       </AppLayout>
+      {/* 이벤트인지 날짜인지에 따라 다른 모달 렌더링 */}
       {curState?.type === "EVENT" ? (
         <Modal
           title="이벤트 수정하기"
@@ -258,6 +267,8 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+// 상수화 할 수 있는 컴포넌트는 부모와 같은 레벨에 선언해 렌더링 최적화
 
 const SubmitButton = () => {
   return (

@@ -4,6 +4,8 @@ const User = require("../models/user");
 const mongoose = require("mongoose");
 const authenticateToken = require("../modules/auth");
 
+// 일정 받아오기
+
 router.get("/", authenticateToken, async (req, res) => {
   try {
     const { userId } = req.body;
@@ -20,6 +22,8 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
+// 일정 받아오기(기간별)
+
 router.get("/period", authenticateToken, async (req, res) => {
   try {
     const start = Number(req.query.start);
@@ -29,6 +33,7 @@ router.get("/period", authenticateToken, async (req, res) => {
 
     const periodList = userItemList.searchSchedule(start, end);
 
+    // 전송하기 전에 정렬을 함
     periodList.sort(function (a, b) {
       if (a.start > b.start) return 1;
       if (a.start === b.start) return 0;
@@ -47,6 +52,8 @@ router.get("/period", authenticateToken, async (req, res) => {
     console.error(e);
   }
 });
+
+// 일정 추가하기
 
 router.post("/", authenticateToken, async (req, res) => {
   try {
@@ -69,6 +76,8 @@ router.post("/", authenticateToken, async (req, res) => {
   }
 });
 
+// 일정 수정하기
+
 router.put("/", authenticateToken, async (req, res) => {
   try {
     const { newEvent, userId } = req.body;
@@ -84,6 +93,8 @@ router.put("/", authenticateToken, async (req, res) => {
     console.error(e);
   }
 });
+
+// 일정 삭제하기
 
 router.delete("/", authenticateToken, async (req, res) => {
   try {

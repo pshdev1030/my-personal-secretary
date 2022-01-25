@@ -11,6 +11,8 @@ interface ModalPropsTypes {
   onSubmit?: (data?: any) => void;
 }
 
+// 모달 컴포넌트
+
 const Modal = ({
   children,
   visible,
@@ -18,6 +20,7 @@ const Modal = ({
   footer,
   onCloseModal,
 }: ModalPropsTypes): ReactElement => {
+  // 버블링을 막는 함수, 큰 단위마다 작성해줌
   const onClickContent = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }, []);
@@ -33,6 +36,7 @@ const Modal = ({
             </ModalHeader>
             <ModalContent onClick={onClickContent}>{children}</ModalContent>
             <ModalFooter onClick={onClickContent}>
+              {/* footer를 배열로 받아와서 렌더링 */}
               {footer?.map((ele: any) => (
                 <span key={ele.key}>{ele}</span>
               ))}
@@ -45,6 +49,8 @@ const Modal = ({
 };
 
 export default Modal;
+
+// css in js
 
 const BackGround = styled.div`
   position: fixed;

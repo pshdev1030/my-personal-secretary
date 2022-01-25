@@ -20,6 +20,7 @@ const SignUpPage: NextPage = () => {
     Router.push("/");
   }
 
+  // 유효성검사와 회원가입을 하는 함수
   const onSubmit = useCallback(async (data: SignUpFormRequestType) => {
     const { signUpEmail: email, signUpPassword: password, username } = data;
     if (

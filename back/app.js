@@ -10,12 +10,7 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-const corsOpt = function (req, callbank) {
-  callbank(null, { origin: true });
-};
-
-app.options("*", cors(corsOpt));
+// 기본적인 미들웨어
 
 const port = process.env.PORT || 7000;
 

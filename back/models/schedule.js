@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+
+// 개별 일정 모델
 const ScheduleItemSchema = new mongoose.Schema(
   {
     start: {
@@ -24,6 +26,8 @@ const ScheduleItemSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//유저별 일정을 저장하는 모델
 
 const ScheduleSchema = new mongoose.Schema({
   userId: {

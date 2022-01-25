@@ -7,6 +7,8 @@ interface SignUpFormType {
   onSubmit: (data: SignUpFormRequestType) => void;
 }
 
+// 회원가입폼, antd를 이용한 유효성검사
+
 const SignUpForm = ({ onSubmit }: SignUpFormType): ReactElement => {
   return (
     <Form onFinish={onSubmit}>

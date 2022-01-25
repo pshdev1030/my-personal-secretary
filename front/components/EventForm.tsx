@@ -17,6 +17,7 @@ const EventForm = ({
   formId,
 }: EventFormPropsType): ReactElement => {
   return (
+    // end와 start값이 같을경우 end가 누락되어 null이 들어감, start의 유무에 따라 다른 값을 넣을 수 있도록 하였음
     <Form
       onFinish={onSubmit}
       id={formId}
