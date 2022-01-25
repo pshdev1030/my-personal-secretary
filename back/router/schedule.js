@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Schedule = require("../models/schedule");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 const authenticateToken = require("../modules/auth");
 
@@ -8,6 +9,9 @@ router.get("/", authenticateToken, async (req, res) => {
     const { userId } = req.body;
     let userItemList = await Schedule.findOne().where("userId").equals(userId);
     if (!userItemList) {
+      if (User.findUser(userId)) {
+        res.status(401).json("존재하지 않는 사용자입니다.");
+      }
       userItemList = await Schedule.create({ userId, scheduleList: [] });
     }
     return res.status(200).json(userItemList.scheduleList);
@@ -26,6 +30,9 @@ router.get("/period", authenticateToken, async (req, res) => {
     const periodList = userItemList.searchSchedule(start, end);
 
     if (!userItemList) {
+      if (User.findUser(userId)) {
+        res.status(401).json("존재하지 않는 사용자입니다.");
+      }
       userItemList = await Schedule.create({ userId, scheduleList: [] });
     }
 
@@ -42,6 +49,9 @@ router.post("/", authenticateToken, async (req, res) => {
     let userItemList = await Schedule.findOne().where("userId").equals(userId);
 
     if (!userItemList) {
+      if (User.findUser(userId)) {
+        res.status(401).json("존재하지 않는 사용자입니다.");
+      }
       userItemList = await Schedule.create({ userId, data: [] });
     }
 

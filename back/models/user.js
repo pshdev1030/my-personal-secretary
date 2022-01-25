@@ -35,4 +35,9 @@ UserSchema.statics.existEmailValidator = async function (value) {
   return result;
 };
 
+UserSchema.statics.findUser = async function (id) {
+  const result = (await this.findOne({ _id: id })) ? true : false;
+  return result;
+};
+
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
