@@ -51,7 +51,9 @@ const AppLayout = ({ children }: AppLayoutPropsType): ReactElement => {
       success: "로그인에 성공하였습니다.",
       error: {
         render({ data }: any) {
-          return data.response.data;
+          return data.response.data
+            ? data.response.data
+            : "문제가 발생하였습니다.";
         },
       },
     });

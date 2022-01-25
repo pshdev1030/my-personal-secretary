@@ -5,7 +5,10 @@ import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import Head from "next/head";
+import "moment/locale/ko";
 import { Global, css } from "@emotion/react";
+import { SWRConfig } from "swr";
+import { toast } from "react-toastify";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -29,7 +32,19 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       />
-      <Component {...pageProps} />
+      <SWRConfig
+        value={{
+          onError: (error, key) => {
+            if (key === "http://localhost:8000/user/login") return;
+
+            if (error) {
+              toast.error("문제가 발생하였습니다.");
+            }
+          },
+        }}
+      >
+        <Component {...pageProps} />
+      </SWRConfig>
     </>
   );
 }

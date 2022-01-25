@@ -52,7 +52,9 @@ const SignUpPage: NextPage = () => {
       success: "회원가입에 성공하였습니다. 곧 메인페이지로 이동합니다.",
       error: {
         render({ data }: any) {
-          return data.response.data;
+          return data.response.data
+            ? data.response.data
+            : "문제가 발생하였습니다.";
         },
       },
     });

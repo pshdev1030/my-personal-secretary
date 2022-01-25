@@ -100,7 +100,13 @@ const Home: NextPage = () => {
         toast.promise(newEventRequest, {
           pending: "이벤트를 등록 중입니다.",
           success: "이벤트를 등록하였습니다.",
-          error: "문제가 발생하였습니다.",
+          error: {
+            render({ data }: any) {
+              return data.response.data
+                ? data.response.data
+                : "문제가 발생하였습니다.";
+            },
+          },
         });
 
         setIsOpenedModal(false);
@@ -148,7 +154,13 @@ const Home: NextPage = () => {
         toast.promise(modifyEventRequest, {
           pending: "이벤트를 수정 중입니다.",
           success: "이벤트를 수정하였습니다.",
-          error: "문제가 발생하였습니다.",
+          error: {
+            render({ data }: any) {
+              return data.response.data
+                ? data.response.data
+                : "문제가 발생하였습니다.";
+            },
+          },
         });
 
         setIsOpenedModal(false);
@@ -175,7 +187,13 @@ const Home: NextPage = () => {
         toast.promise(removeEventRequest, {
           pending: "이벤트를 삭제 중입니다.",
           success: "이벤트를 삭제하였습니다.",
-          error: "문제가 발생하였습니다.",
+          error: {
+            render({ data }: any) {
+              return data.response.data
+                ? data.response.data
+                : "문제가 발생하였습니다.";
+            },
+          },
         });
 
         setIsOpenedModal(false);
