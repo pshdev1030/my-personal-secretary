@@ -1,6 +1,5 @@
 import axios from "axios";
 import { SecretaryStateType } from "types/secretary";
-import { string } from "yup";
 
 // user 정보에 appId와 userKey가 들어있다고 가정하고 만든 token을 받아오는 fetcher
 // swr에 사용됨

@@ -15,10 +15,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@components/*": ["components/*"],
-      "@types/*": ["@types/*"],
-      "@interfaces/*": ["@interfaces/*"],
-      "@pages/*": ["@pages/*"]
+      "components/*": ["components/*"],
+      "types/*": ["types/*"],
+      "interfaces/*": ["interfaces/*"],
+      "pages/*": ["pages/*"]
     },
     "incremental": true
   },

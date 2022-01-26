@@ -1,6 +1,5 @@
-import React, { ReactElement, useCallback, useRef } from "react";
+import React, { ReactElement } from "react";
 import { Input, Form, Button } from "antd";
-import { useSWRConfig } from "swr";
 import { SignUpFormRequestType } from "types/user";
 
 interface SignUpFormType {

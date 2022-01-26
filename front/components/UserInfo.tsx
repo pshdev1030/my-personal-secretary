@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from "react";
+import { ReactElement } from "react";
 import { Avatar, Card, Button } from "antd";
 import gravatar from "gravatar";
 import { UserType } from "types/user";

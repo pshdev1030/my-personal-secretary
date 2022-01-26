@@ -8,7 +8,6 @@ import Head from "next/head";
 import "moment/locale/ko";
 import { Global, css } from "@emotion/react";
 import { SWRConfig } from "swr";
-import { toast } from "react-toastify";
 import { dbUrl } from "constant/api";
 
 // 공통으로 필요한 것들을 정의

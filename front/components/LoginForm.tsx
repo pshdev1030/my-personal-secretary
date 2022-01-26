@@ -1,9 +1,6 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement } from "react";
 import { Input, Form, Button } from "antd";
 import Link from "next/link";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useSWRConfig } from "swr";
 import { LogInFormRequestType } from "types/user";
 
 interface LogInFormType {

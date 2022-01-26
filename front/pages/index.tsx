@@ -1,12 +1,12 @@
-import AppLayout from "@components/AppLayout";
-import Calendar from "@components/Calendar";
+import AppLayout from "components/AppLayout";
+import Calendar from "components/Calendar";
 import type { NextPage } from "next";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 import { eventFetcher, eventLocalFetcher } from "fetcher/event";
-import EventForm from "@components/EventForm";
-import Modal from "@components/Modal";
+import EventForm from "components/EventForm";
+import Modal from "components/Modal";
 import { Button } from "antd";
 import axios from "axios";
 import { loginFetcher } from "fetcher/user";

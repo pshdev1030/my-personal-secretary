@@ -1,8 +1,6 @@
-import { Form, Input, DatePicker, Select, FormInstance } from "antd";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { Form, Input, DatePicker } from "antd";
+import { ReactElement } from "react";
 import moment from "moment";
-import useSWR from "swr";
-import { eventLocalFetcher } from "fetcher/event";
 import { EventType } from "types/event";
 
 interface EventFormPropsType {

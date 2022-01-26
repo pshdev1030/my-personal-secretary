@@ -1,5 +1,5 @@
-import AppLayout from "@components/AppLayout";
-import SignUpForm from "@components/SignUpForm";
+import AppLayout from "components/AppLayout";
+import SignUpForm from "components/SignUpForm";
 import useSWR from "swr";
 import type { NextPage } from "next";
 import { loginFetcher } from "fetcher/user";

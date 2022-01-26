@@ -1,6 +1,6 @@
 import { Row, Col, Menu } from "antd";
 import Link from "next/link";
-import { ReactElement, ReactNode, useCallback, useEffect } from "react";
+import { ReactElement, ReactNode, useCallback } from "react";
 import LoginForm from "./LoginForm";
 import { toast, ToastContainer } from "react-toastify";
 import UserInfo from "./UserInfo";
