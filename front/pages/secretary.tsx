@@ -1,5 +1,5 @@
-import AppLayout from "@components/AppLayout";
-import Secretary from "@components/Secretary";
+import AppLayout from "components/AppLayout";
+import Secretary from "components/Secretary";
 import axios from "axios";
 import { dbUrl } from "constant/api";
 import { secretaryFetcher, secretaryLocalFetcher } from "fetcher/secretary";
