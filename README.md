@@ -43,9 +43,19 @@ back
 
 typescript nextjs + antd + swr
 
+dev
+
 ```
 npm i
 npm run dev
+```
+
+build and run
+
+```
+npm i
+npm run build
+npm run start
 ```
 
 ### Folder Structure

@@ -72,23 +72,31 @@ const SecretaryPage: NextPage = () => {
 
         // ai 비서 템플릿 생성
         // 인사말과 마무리멘트를 추가한다.
-
-        const templateArr = modifyEventRequest.map((ele: EventType) => {
-          if (ele.start === ele.end) {
-            // 요일을 받아오기 위해 format을 정해줌
-            const eventDate = moment(ele.date).format(
-              "YYYY년 M월 D일 dd요일 k시m분"
-            );
-            return `${eventDate}에는 ${ele.title}일정이 있습니다. `;
-          }
-          const eventStart = moment(ele.start).format(
-            "YYYY년 M월 D일 dd요일 k시m분"
-          );
-          const eventEnd = moment(ele.start).format(
-            "YYYY년 M월 D일 dd요일 k시m분"
-          );
-          return `${eventStart}부터 ${eventEnd}까지는 ${ele.title} 일정이 있습니다.`;
-        });
+        let templateArr =
+          modifyEventRequest.length === 0
+            ? [
+                `${moment(start).format(
+                  "YYYY년 M월 D일 dd요일 k시m분"
+                )}부터 ${moment(start).format(
+                  "YYYY년 M월 D일 dd요일 k시m분"
+                )}까지는 일정이 없습니다.`,
+              ]
+            : modifyEventRequest.map((ele: EventType) => {
+                if (ele.start === ele.end) {
+                  // 요일을 받아오기 위해 format을 정해줌
+                  const eventDate = moment(ele.date).format(
+                    "YYYY년 M월 D일 dd요일 k시m분"
+                  );
+                  return `${eventDate}에는 ${ele.title}일정이 있습니다. `;
+                }
+                const eventStart = moment(ele.start).format(
+                  "YYYY년 M월 D일 dd요일 k시m분"
+                );
+                const eventEnd = moment(ele.start).format(
+                  "YYYY년 M월 D일 dd요일 k시m분"
+                );
+                return `${eventStart}부터 ${eventEnd}까지는 ${ele.title} 일정이 있습니다.`;
+              });
 
         templateArr.unshift(`안녕하세요 ${user.username}님 AI비서입니다.`);
         templateArr.push(`오늘도 좋은 하루 되세요`);
